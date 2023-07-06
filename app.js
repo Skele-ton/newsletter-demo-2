@@ -2,12 +2,15 @@ import express from'express';
 import mailchimp from '@mailchimp/mailchimp_marketing';
 import path from 'path';
 import { fileURLToPath } from 'url';
- 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const app = express();
+const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const apiKey = 'ea47736484f69d616c7958d3dcdb9551a-us11';
 const server = 'us11';
 const audId = 'f769d3f524';
 
@@ -16,12 +19,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
  
 mailchimp.setConfig({
-  apiKey: apiKey,
+  apiKey: process.env.KEY,
   server: server,
 });
  
 app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/signup.html`);
+  res.sendFile(`${__dirname}/index.html`);
 });
  
 app.post('/', (req, res) => {
